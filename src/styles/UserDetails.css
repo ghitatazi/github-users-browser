@@ -1,0 +1,29 @@
+.col-hidden {
+	display: none;
+}
+
+.avatar {
+	width: 150px;
+	height: 150px;
+	margin-top: 10px;
+	margin-left: 10px;
+	display: inline-block;
+	border: 1px solid #ddd;
+}
+
+.login {
+	margin-left: 20px;
+	font-size: 20px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-style: italic;
+}
+
+.repo-title {
+	margin-left: 10px;
+	margin-top: 10px;
+}
+
+.table-container {
+	width: 80%;
+	margin-left: 10px;
+}
