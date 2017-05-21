@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 import { combineReducers } from 'redux';
-import { SET_USERS, ADD_USER_REPOSITORIES, DISPLAY_DETAILS, CLEAR_DETAILS } from '../constants/ActionConstants';
+import { SET_USERS, ADD_USER_REPOSITORIES, DISPLAY_DETAILS, CLEAR_DETAILS, SHOW_ALERT } from '../constants/ActionConstants';
 
 const users = (state = [], action) => {
 	switch (action.type) {
@@ -40,9 +40,19 @@ const details = (state = { displayDetails: false, userSelected: '' }, action) =>
 	}
 }
 
+const showAlert = (state = false, action) => {
+	switch (action.type) {
+		case SHOW_ALERT:
+			return true;
+		default:
+			return state;
+	}
+}
+
 const rootReducer = combineReducers({
 	users,
 	details,
+	showAlert
 });
 
 export default rootReducer;

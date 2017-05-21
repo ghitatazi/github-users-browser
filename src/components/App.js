@@ -3,6 +3,7 @@ import logo from '../logo.svg';
 import '../styles/App.css';
 import UsersListContainer from '../containers/UsersListContainer';
 import UsersDetailsContainer from '../containers/UserDetailsContainer';
+import AlertErrorContainer from '../containers/AlertErrorContainer';
 import { Col } from 'react-bootstrap';
 
 class App extends Component {
@@ -20,6 +21,9 @@ class App extends Component {
         </Col>
         <div>
           <UsersDetailsContainer/>
+        </div>
+        <div>
+          <AlertErrorContainer/>
         </div>
       </div>
     );

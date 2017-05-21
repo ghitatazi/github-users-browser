@@ -1,7 +1,12 @@
 import 'babel-polyfill';
-import users from '../resources/users.json';
-import repositories from '../resources/repositories.json';
-import { SET_USERS, ADD_USER_REPOSITORIES, DISPLAY_DETAILS, CLEAR_DETAILS } from '../constants/ActionConstants';
+import { SET_USERS, ADD_USER_REPOSITORIES, DISPLAY_DETAILS, CLEAR_DETAILS, SHOW_ALERT } from '../constants/ActionConstants';
+import fetch from 'isomorphic-fetch';
+
+export const showAlert = () => {
+	return {
+		type: SHOW_ALERT
+	}
+}
 
 export const setUsers = (allUsers) => {
 	return {
@@ -10,34 +15,44 @@ export const setUsers = (allUsers) => {
 	}
 }
 
-export const setListOfUsers = () => {
+export const filterListOfUsers = (jsonData, value) => {
 	return (dispatch) => {
-		let allUsers = users["items"]
-			.map(userObj => {
-				return {
-					login: userObj["login"],
-					avatar_url: userObj["avatar_url"],
-					repositories: []
-				}
-			});
-		dispatch(setUsers(allUsers));
+		if ("items" in jsonData) {
+			let filteredUsers = jsonData["items"]
+				.filter(userObj => {
+					return userObj["login"].startsWith(value);
+				})
+				.map(userObj => {
+					return {
+						login: userObj["login"],
+						avatar_url: userObj["avatar_url"],
+						repositories: []
+					}
+				});
+			dispatch(setUsers(filteredUsers));
+		} else {
+			dispatch(showAlert());
+		}
 	}
 }
 
-export const filterListOfUsers = (value) => {
+export const getListOfUsers = (value) => {
 	return (dispatch) => {
-		let filteredUsers = users["items"]
-			.filter(userObj => {
-				return userObj["login"].startsWith(value);
-			})
-			.map(userObj => {
-				return {
-					login: userObj["login"],
-					avatar_url: userObj["avatar_url"],
-					repositories: []
+		if (value !== '') {
+			return fetch('https://api.github.com/search/users?q='+value, {
+				method: 'get',
+				headers: {
+					'Access-Control-Allow-Origin': '*',
 				}
-			});
-		dispatch(setUsers(filteredUsers));
+			})
+			.then(response => response.json())
+			.then(json => {
+				dispatch(filterListOfUsers(json, value))
+			})
+		} else {
+			var filteredUsers = [];
+			dispatch(setUsers(filteredUsers));
+		}
 	}
 }
 
@@ -62,9 +77,9 @@ export const addUserRepositories = (login, repositories) => {
 	}
 }
 
-export const getUserRepositories = (login) => {
+export const getUserRepositories = (jsonData, login) => {
 	return (dispatch) => {
-		let userRepos = repositories
+		let userRepos = jsonData
 			.filter(repoObj => {
 				return repoObj["owner"]["login"] === login;
 			})
@@ -73,9 +88,22 @@ export const getUserRepositories = (login) => {
 	}
 }
 
+export const getRemoteRepositories = (login) => {
+	return (dispatch) => {
+		return fetch('https://api.github.com/users/'+login+'/repos', {
+				method: 'get',
+				headers: {
+					'Access-Control-Allow-Origin': '*',
+				}
+			})
+			.then(response => response.json())
+			.then(json => dispatch(getUserRepositories(json, login)))
+	}
+}
+
 export const showUserDetails = (login) => {
 	return (dispatch) => {
-		dispatch(getUserRepositories(login));
+		dispatch(getRemoteRepositories(login));
 		dispatch(displayDetails(login));
 	}
 }

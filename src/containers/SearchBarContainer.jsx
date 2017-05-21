@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { filterListOfUsers, clearDetails } from '../actions/ActionsCreator';
+import { getListOfUsers, clearDetails } from '../actions/ActionsCreator';
 import SearchBar from '../components/SearchBar';
 
 const mapStateToProps = (state) => {
@@ -9,7 +9,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		onChangeValue: (e) => {
-      		dispatch(filterListOfUsers(e.target.value));
+			dispatch(getListOfUsers(e.target.value));
       		dispatch(clearDetails());
     	}
 	}

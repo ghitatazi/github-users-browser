@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { setListOfUsers, showUserDetails, clearDetails } from '../actions/ActionsCreator';
+import { showUserDetails, clearDetails } from '../actions/ActionsCreator';
 import UsersList from '../components/UsersList';
 
 const mapStateToProps = (state) => {
@@ -10,9 +10,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		getUsers: () => {
-			dispatch(setListOfUsers());
-		},
 		onSelectUser: (login) => {
 			dispatch(showUserDetails(login));
 		},
