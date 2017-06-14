@@ -30,24 +30,18 @@ INSTALLATION
 Install last stable version of Node.js (it also includes Npm, cf https://nodejs.org/en/download/)<br />
 Install the NPM dependencies listed in package.json (npm install)<br />
 
-Also, to allow CORS (Cross Origin Resource Sharing), you will have to download a plugin on your Web browser<br />
-See extension for Chrome: 'Allow-Control-Allow-Origin: *'<br />
-See plugin for Firefox: 'CORS Everywhere'<br />
-
 BUILD
 -----
 
 At the project root, execute following command to start the development server: npm start<br />
-With the new version of Create React App (v1.0.2, May 20, 2017), you will see the LAN address in additional to the localhost address.
+With the version of Create React App (v1.0.2, May 20, 2017), you will see the LAN address in addition to the localhost address.
 By default, the server runs on port 3000. If the port is not available on your machine, you will be asked if you want to run the app on another one. Select 'yes' if so.<br />
 Then go to your favorite browser and type 'localhost:3000' (or the selected port)<br />
 You should see the application interface<br />
 
-IMPORTANT FACT
---------------
+GitHub public API
+-----------------
 
 To get users profiles and repositories, I used the GitHub public API<br />
 As described here: https://developer.github.com/v3/#rate-limiting, for unauthenticated requests, the rate limit allows to make up to 60 requests per hour<br />
-That's why, after 60 requests (60 characters in the search input), you will see an alert popping up on the interface to inform you that the rate limit has been exceeded<br />
-To increase this rate, I could have added my app's client ID and secret in the request made to the GitHub public API<br />
-But that is absolutly not advised in the client-side browser code<br />
+That's why, after reaching this limit, you will see an alert popping up on the interface to inform you that the rate limit has been exceeded<br />

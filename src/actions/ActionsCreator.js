@@ -37,13 +37,10 @@ export const filterListOfUsers = (jsonData, value) => {
 }
 
 export const getListOfUsers = (value) => {
-	return (dispatch) => {
+	const thunk = (dispatch) => {
 		if (value !== '') {
 			return fetch('https://api.github.com/search/users?q='+value, {
-				method: 'get',
-				headers: {
-					'Access-Control-Allow-Origin': '*',
-				}
+				method: 'get'
 			})
 			.then(response => response.json())
 			.then(json => {
@@ -54,6 +51,13 @@ export const getListOfUsers = (value) => {
 			dispatch(setUsers(filteredUsers));
 		}
 	}
+	thunk.meta = {
+		debounce: {
+			time: 500,
+			key: 'GET_GITHUB_USERS'
+		}
+	}
+	return thunk;
 }
 
 export const displayDetails = (login) => {

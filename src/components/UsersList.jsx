@@ -27,7 +27,7 @@ const UsersList = ({ users, onSelectUser, onDeselectUser }) => {
 	}
 	const selectRowProp = {
 		mode: 'radio',
-		bgColor: 'pink',
+		bgColor: '#5bc0de',
 		hideSelectColumn: true,
 		clickToSelect: true,
 		onSelect: onSelectCallback
