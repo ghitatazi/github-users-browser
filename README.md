@@ -18,6 +18,7 @@ USED TECHNOLOGIES
 -> Redux<br />
 -> Redux-thunk<br />
 -> Redux-logger<br />
+-> Redux-debounced<br />
 -> Fetch API<br />
 -> React-bootstrap<br />
 -> React-bootstrap-table<br />
